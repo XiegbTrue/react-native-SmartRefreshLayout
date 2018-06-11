@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false" >
+
+    <!--通过Android动画集播放的十张图片-->
+    <item
+        android:drawable="@drawable/just1"
+        android:duration="0" />
+    <item
+        android:drawable="@drawable/just2"
+        android:duration="60" />
+    <item
+        android:drawable="@drawable/just3"
+        android:duration="60" />
+    <item
+        android:drawable="@drawable/just4"
+        android:duration="60" />
+    <item
+        android:drawable="@drawable/just5"
+        android:duration="60" />
+    <item
+        android:drawable="@drawable/just6"
+        android:duration="60" />
+    <item
+        android:drawable="@drawable/just7"
+        android:duration="60" />
+    <item
+        android:drawable="@drawable/just8"
+        android:duration="60" />
+    <item
+        android:drawable="@drawable/just9"
+        android:duration="60" />
+    <item
+        android:drawable="@drawable/just10"
+        android:duration="60" />
+
+</animation-list>

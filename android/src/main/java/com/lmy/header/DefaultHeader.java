@@ -1,16 +1,19 @@
 package com.lmy.header;
 
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.support.annotation.ColorInt;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.lmy.smartrefreshlayout.R;
 import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshKernel;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -32,6 +35,7 @@ public class DefaultHeader extends LinearLayout implements RefreshHeader {
     protected RefreshKernel mRefreshKernel;
     protected int mBackgroundColor;
     protected int mAccentColor;
+    private AnimationDrawable animationDrawable;
 
     public DefaultHeader(Context context) {
         super(context);
@@ -51,18 +55,22 @@ public class DefaultHeader extends LinearLayout implements RefreshHeader {
 
     private void initView(Context context) {
         setGravity(Gravity.CENTER);
-        mHeaderText = new TextView(context);
-        mHeaderText.setText("下拉开始刷新");
-        mProgressDrawable = new ProgressDrawable();
-        mArrowView = new PathsView(context);
+//        mHeaderText = new TextView(context);
+//        mHeaderText.setText("下拉开始刷新");
+//        mProgressDrawable = new ProgressDrawable();
+//        mArrowView = new PathsView(context);
         mProgressView = new ImageView(context);
-        mProgressView.setImageDrawable(mProgressDrawable);
-        mArrowView.parserColors(0xff666666);
-        mArrowView.parserPaths("M20,12l-1.41,-1.41L13,16.17V4h-2v12.17l-5.58,-5.59L4,12l8,8 8,-8z");
-        addView(mProgressView, DensityUtil.dp2px(20), DensityUtil.dp2px(20));
-        addView(mArrowView, DensityUtil.dp2px(20), DensityUtil.dp2px(20));
-        addView(new View(context), DensityUtil.dp2px(20), DensityUtil.dp2px(20));
-        addView(mHeaderText, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
+
+        mProgressView.setImageDrawable(getResources().getDrawable(R.drawable.animalist));
+        animationDrawable = (AnimationDrawable) mProgressView.getDrawable();
+        animationDrawable.selectDrawable(9);
+//        mProgressView.setImageDrawable(mProgressDrawable);
+//        mArrowView.parserColors(0xff666666);
+//        mArrowView.parserPaths("M20,12l-1.41,-1.41L13,16.17V4h-2v12.17l-5.58,-5.59L4,12l8,8 8,-8z");
+        addView(mProgressView, DensityUtil.dp2px(200), DensityUtil.dp2px(60));
+//        addView(mArrowView, DensityUtil.dp2px(20), DensityUtil.dp2px(20));
+//        addView(new View(context), DensityUtil.dp2px(20), DensityUtil.dp2px(20));
+//        addView(mHeaderText, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
         setMinimumHeight(DensityUtil.dp2px(60));
     }
 
@@ -78,17 +86,20 @@ public class DefaultHeader extends LinearLayout implements RefreshHeader {
 
     @Override
     public void onStartAnimator(RefreshLayout layout, int headHeight, int extendHeight) {
-        mProgressDrawable.start();//开始动画
+//        mProgressDrawable.start();//开始动画
+        animationDrawable.start();
     }
 
     @Override
     public int onFinish(RefreshLayout layout, boolean success) {
-        mProgressDrawable.stop();//停止动画
-        if (success) {
-            mHeaderText.setText("刷新完成");
-        } else {
-            mHeaderText.setText("刷新失败");
-        }
+//        mProgressDrawable.stop();//停止动画
+        animationDrawable.stop();
+        animationDrawable.selectDrawable(9);
+//        if (success) {
+//            mHeaderText.setText("刷新完成");
+//        } else {
+//            mHeaderText.setText("刷新失败");
+//        }
         return 500;//延迟500毫秒之后再弹回
     }
 
@@ -97,19 +108,19 @@ public class DefaultHeader extends LinearLayout implements RefreshHeader {
         switch (newState) {
             case None:
             case PullDownToRefresh:
-                mHeaderText.setText("下拉开始刷新");
-                mArrowView.setVisibility(VISIBLE);//显示下拉箭头
-                mProgressView.setVisibility(GONE);//隐藏动画
-                mArrowView.animate().rotation(0);//还原箭头方向
+//                mHeaderText.setText("下拉开始刷新");
+//                mArrowView.setVisibility(VISIBLE);//显示下拉箭头
+//                mProgressView.setVisibility(GONE);//隐藏动画
+//                mArrowView.animate().rotation(0);//还原箭头方向
                 break;
             case Refreshing:
-                mHeaderText.setText("正在刷新");
-                mProgressView.setVisibility(VISIBLE);//显示加载动画
-                mArrowView.setVisibility(GONE);//隐藏箭头
+//                mHeaderText.setText("正在刷新");
+//                mProgressView.setVisibility(VISIBLE);//显示加载动画
+//                mArrowView.setVisibility(GONE);//隐藏箭头
                 break;
             case ReleaseToRefresh:
-                mHeaderText.setText("释放立即刷新");
-                mArrowView.animate().rotation(180);//显示箭头改为朝上
+//                mHeaderText.setText("释放立即刷新");
+//                mArrowView.animate().rotation(180);//显示箭头改为朝上
                 break;
         }
     }
@@ -155,14 +166,14 @@ public class DefaultHeader extends LinearLayout implements RefreshHeader {
         return this;
     }
     public DefaultHeader setAccentColor(int accentColor){
-        mAccentColor=accentColor;
-        if(mArrowView!=null){
-            mArrowView.parserColors(accentColor);
-        }
-        if(mProgressDrawable!=null) {
-            mProgressDrawable.setColor(accentColor);
-        }
-        mHeaderText.setTextColor(accentColor);
+//        mAccentColor=accentColor;
+//        if(mArrowView!=null){
+//            mArrowView.parserColors(accentColor);
+//        }
+//        if(mProgressDrawable!=null) {
+//            mProgressDrawable.setColor(accentColor);
+//        }
+//        mHeaderText.setTextColor(accentColor);
         return this;
     }
 
